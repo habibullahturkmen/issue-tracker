@@ -26,7 +26,7 @@ export default function RootLayout({
         <Providers>
           <Theme>
             <NavBar />
-            <main>{children}</main>
+            <main className="p-5">{children}</main>
           </Theme>
         </Providers>
       </body>
