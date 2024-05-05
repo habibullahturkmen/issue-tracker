@@ -1,0 +1,8 @@
+### Create an issue
+POST http://localhost:3000/api/issues
+Content-Type: application/json
+
+{
+  "title": "Dummy Issue",
+  "description": "Dummy description"
+}

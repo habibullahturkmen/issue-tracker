@@ -32,6 +32,9 @@ dependencies:
   react-icons:
     specifier: ^5.2.0
     version: 5.2.0(react@18.3.1)
+  zod:
+    specifier: ^3.23.6
+    version: 3.23.6
 
 devDependencies:
   '@types/node':
@@ -2940,3 +2943,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
+    dev: false
