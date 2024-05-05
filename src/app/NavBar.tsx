@@ -30,10 +30,12 @@ const NavBar = () => {
             <Link
               className={clsx({
                 "text-zinc-900 dark:text-white": link.href === currentPath,
-                "text-zinc-500 dark:text-gray-300 hover:text-zinc-900 dark:hover:text-white": link.href !== currentPath,
+                "text-zinc-500 dark:text-gray-300 hover:text-zinc-900 dark:hover:text-white":
+                  link.href !== currentPath,
                 "transition-colors": true,
               })}
-              href={link.href}>
+              href={link.href}
+            >
               {link.label}
             </Link>
           </li>

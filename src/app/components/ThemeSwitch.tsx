@@ -10,9 +10,7 @@ export default function ThemeSwitch() {
 
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return (
-    <div style={{ height: "16px", width: "16px" }}></div>
-  )
+  if (!mounted) return <div style={{ height: "16px", width: "16px" }}></div>
 
   if (resolvedTheme === "dark") {
     return (
@@ -33,5 +31,4 @@ export default function ThemeSwitch() {
       />
     )
   }
-
 }

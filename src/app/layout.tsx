@@ -1,4 +1,6 @@
 import { Inter } from "next/font/google"
+import { Theme } from "@radix-ui/themes"
+import "@radix-ui/themes/styles.css"
 import type { Metadata } from "next"
 import React from "react"
 
@@ -21,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className}>
-      <Providers>
-        <NavBar />
-        <main>{children}</main>
-      </Providers>
+        <Providers>
+          <Theme>
+            <NavBar />
+            <main>{children}</main>
+          </Theme>
+        </Providers>
       </body>
     </html>
   )
