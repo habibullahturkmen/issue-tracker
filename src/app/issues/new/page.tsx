@@ -38,7 +38,7 @@ const NewIssuePage = () => {
     setIsClient(true)
   }, [])
 
-  const onSubmit = async (data: IssueForm) => {
+  const onSubmit = handleSubmit(async (data: IssueForm) => {
     try {
       setIsLoading(true)
       await axios.post("/api/issues", data)
@@ -49,7 +49,7 @@ const NewIssuePage = () => {
       reset()
       setIsLoading(false)
     }
-  }
+  })
 
   return (
     <div className="max-w-2xl space-y-3">
@@ -61,7 +61,7 @@ const NewIssuePage = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Title" {...register("title")} />
         <ErrorMessage message={errors.title?.message} />
         {isClient ? (
