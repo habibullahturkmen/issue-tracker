@@ -10,7 +10,6 @@ import ThemeSwitch from "@/app/components/ThemeSwitch"
 
 const NavBar = () => {
   const currentPath = usePathname()
-  console.log(currentPath)
   const links = [
     { id: 0, label: "Dashboard", href: "/" },
     { id: 1, label: "Issues", href: "/issues" },

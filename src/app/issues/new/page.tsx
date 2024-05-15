@@ -25,13 +25,15 @@ const NewIssuePage = () => {
     setIsClient(true)
   }, [])
 
+  const onSubmit = async (data: IssueForm) => {
+    await axios.post("/api/issues", data)
+    router.push("/issues")
+  }
+
   return (
     <form
       className="max-w-2xl space-y-3"
-      onSubmit={handleSubmit(async (data) => {
-        await axios.post("/api/issues", data)
-        router.push("/issues")
-      })}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <TextField.Root placeholder="Title" {...register("title")} />
       {isClient ? (
