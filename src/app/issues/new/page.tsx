@@ -53,7 +53,7 @@ const NewIssuePage = () => {
           />
         </>
       ) : (
-        <Skeleton height={"500px"} />
+        <Skeleton className="rounded-md" height={"500px"} />
       )}
       <Button>Submit New Issue</Button>
     </form>

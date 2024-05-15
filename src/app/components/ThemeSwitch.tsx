@@ -3,6 +3,7 @@
 import { AiFillMoon, AiFillSun } from "react-icons/ai"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
+import { Skeleton } from "@radix-ui/themes"
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false)
@@ -10,7 +11,7 @@ export default function ThemeSwitch() {
 
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return <div style={{ height: "16px", width: "16px" }}></div>
+  if (!mounted) return <Skeleton className="rounded-xl" height="16px" width="16px" />
 
   if (resolvedTheme === "dark") {
     return (
