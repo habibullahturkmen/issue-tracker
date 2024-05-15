@@ -1,7 +1,8 @@
 "use client"
 
-import { Button, Callout, Skeleton, TextField } from "@radix-ui/themes"
+import { Button, Callout, Skeleton, Text, TextField } from "@radix-ui/themes"
 import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect, useState } from "react"
 import { AiFillInfoCircle } from "react-icons/ai"
 import { MdEditor, Themes } from "md-editor-rt"
@@ -9,17 +10,24 @@ import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import "md-editor-rt/lib/style.css"
 import axios from "axios"
+import { z } from "zod"
 
-interface IssueForm {
-  title: string
-  description: string
-}
+import { createIssueSchema } from "@/app/validationSchemas"
+
+type IssueForm = z.infer<typeof createIssueSchema>
 
 const NewIssuePage = () => {
   const [isClient, setIsClient] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
 
-  const { register, control, handleSubmit } = useForm<IssueForm>()
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  })
   const { resolvedTheme } = useTheme()
   const router = useRouter()
 
@@ -43,33 +51,40 @@ const NewIssuePage = () => {
           <Callout.Icon>
             <AiFillInfoCircle />
           </Callout.Icon>
-          <Callout.Text>
-            {error}
-          </Callout.Text>
+          <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className="space-y-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
         <TextField.Root placeholder="Title" {...register("title")} />
+        {errors.title && (
+          <Text color="red" as="p">
+            {errors.title.message}
+          </Text>
+        )}
         {isClient ? (
-          <Controller
-            render={({ field }) => {
-              return (
-                <MdEditor
-                  className="rounded-md"
-                  {...field}
-                  theme={resolvedTheme as Themes}
-                  language="en-US"
-                  modelValue={field.value}
-                  placeholder="Add a description..."
-                />
-              )
-            }}
-            name="description"
-            control={control}
-          />
+          <>
+            <Controller
+              render={({ field }) => {
+                return (
+                  <MdEditor
+                    className="rounded-md"
+                    {...field}
+                    theme={resolvedTheme as Themes}
+                    language="en-US"
+                    modelValue={field.value}
+                    placeholder="Add a description..."
+                  />
+                )
+              }}
+              name="description"
+              control={control}
+            />
+            {errors.description && (
+              <Text color="red" as="p">
+                {errors.description.message}
+              </Text>
+            )}
+          </>
         ) : (
           <Skeleton className="rounded-md" height={"500px"} />
         )}
