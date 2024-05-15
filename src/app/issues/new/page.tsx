@@ -27,6 +27,7 @@ const NewIssuePage = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   })
@@ -45,6 +46,7 @@ const NewIssuePage = () => {
     } catch (e) {
       setError("an unexpected error occurred")
     } finally {
+      reset()
       setIsLoading(false)
     }
   }
