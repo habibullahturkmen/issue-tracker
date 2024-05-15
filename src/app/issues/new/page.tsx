@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Callout, Skeleton, TextField } from "@radix-ui/themes"
+import { Button, Callout, Skeleton, Spinner, TextField } from "@radix-ui/themes"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect, useState } from "react"
@@ -20,6 +20,7 @@ type IssueForm = z.infer<typeof createIssueSchema>
 const NewIssuePage = () => {
   const [isClient, setIsClient] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const {
     register,
@@ -38,10 +39,13 @@ const NewIssuePage = () => {
 
   const onSubmit = async (data: IssueForm) => {
     try {
+      setIsLoading(true)
       await axios.post("/api/issues", data)
       router.push("/issues")
     } catch (e) {
       setError("an unexpected error occurred")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -81,7 +85,9 @@ const NewIssuePage = () => {
         ) : (
           <Skeleton className="rounded-md" height={"500px"} />
         )}
-        <Button>Submit New Issue</Button>
+        <Button className="cursor-pointer" disabled={isLoading}>
+          Submit New Issue {isLoading && <Spinner />}
+        </Button>
       </form>
     </div>
   )
