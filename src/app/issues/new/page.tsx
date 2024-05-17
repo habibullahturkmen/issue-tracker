@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Callout, Skeleton, Spinner, TextField } from "@radix-ui/themes"
+import { Button, Callout, Spinner, TextField } from "@radix-ui/themes"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect, useState } from "react"
@@ -64,7 +64,7 @@ const NewIssuePage = () => {
       <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root placeholder="Title" {...register("title")} />
         <ErrorMessage message={errors.title?.message} />
-        {isClient ? (
+        {isClient && (
           <>
             <Controller
               render={({ field }) => {
@@ -84,8 +84,6 @@ const NewIssuePage = () => {
             />
             <ErrorMessage message={errors.description?.message} />
           </>
-        ) : (
-          <Skeleton className="rounded-md" height={"500px"} />
         )}
         <Button className="cursor-pointer" disabled={isLoading}>
           Submit New Issue {isLoading && <Spinner />}
