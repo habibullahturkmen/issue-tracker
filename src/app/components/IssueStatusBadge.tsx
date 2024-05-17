@@ -8,11 +8,11 @@ const statusMap: Record<Status, { label: string; color: "red" | "violet" | "gree
   CLOSED: { label: "Closed", color: "green" },
 }
 
-interface IssueStatus {
+interface IssueStatusType {
   status: Status
 }
 
-const IssueStatusBadge: FC<IssueStatus> = ({ status }) => {
+const IssueStatusBadge: FC<IssueStatusType> = ({ status }) => {
   return <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
 }
 

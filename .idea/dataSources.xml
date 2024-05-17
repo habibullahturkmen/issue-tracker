@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/issue-tracker</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="issue-tracker@production-NeonDB" uuid="67f1b72b-2ce5-47cc-a2bd-9697d49920fd">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ep-winter-hall-a53r545u.us-east-2.aws.neon.tech:5432/issue-tracker</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
