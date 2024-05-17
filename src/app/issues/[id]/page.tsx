@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import React, { FC } from "react"
 
 import IssueStatusBadge from "@/app/components/IssueStatusBadge"
+import MarkdownPreview from "@/app/components/MarkdownPreview"
 import prisma from "../../../../prisma/client"
 
 interface IssueDetailsPageType {
@@ -29,8 +30,8 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
         <IssueStatusBadge status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>
-        <p>{issue.description}</p>
+      <Card className="prose" mt="4">
+        <MarkdownPreview text={issue.description} />
       </Card>
     </div>
   )
