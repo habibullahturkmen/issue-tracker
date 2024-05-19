@@ -32,7 +32,6 @@ const IssueForm: FC<IssueFormType> = ({ issue }) => {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<IssueFormData>({
     resolver: zodResolver(issueSchema),
   })
@@ -46,12 +45,15 @@ const IssueForm: FC<IssueFormType> = ({ issue }) => {
   const onSubmit = handleSubmit(async (data: IssueFormData) => {
     try {
       setIsLoading(true)
-      await axios.post("/api/issues", data)
+      if (issue) {
+        await axios.patch(`/api/issues/${issue.id}`, data)
+      } else {
+        await axios.post("/api/issues", data)
+      }
       router.push("/issues")
     } catch (e) {
       setError("an unexpected error occurred")
     } finally {
-      reset()
       setIsLoading(false)
     }
   })
@@ -92,7 +94,8 @@ const IssueForm: FC<IssueFormType> = ({ issue }) => {
           </>
         )}
         <Button className="cursor-pointer" disabled={isLoading}>
-          Submit New Issue {isLoading && <Spinner />}
+          {issue ? "Update Issue" : "Submit New Issue"}
+          {isLoading && <Spinner />}
         </Button>
       </form>
     </div>
