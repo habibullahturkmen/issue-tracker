@@ -1,14 +1,17 @@
 "use client"
 
 import { MdPreview, MdCatalog, Themes } from "md-editor-rt"
-import React, { useState } from "react"
+import React, { FC, useState } from "react"
 import { useTheme } from "next-themes"
 import "md-editor-rt/lib/preview.css"
 
 const scrollElement = document.documentElement
 
-// @ts-ignore
-const MarkdownPreview = ({ text }) => {
+interface MarkdownPreviewType {
+  text: string
+}
+
+const MarkdownPreview: FC<MarkdownPreviewType> = ({ text }) => {
   const [id] = useState("preview-only")
 
   const { resolvedTheme } = useTheme()

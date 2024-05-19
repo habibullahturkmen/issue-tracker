@@ -3,8 +3,10 @@ import { notFound } from "next/navigation"
 import React, { FC } from "react"
 
 import IssueStatusBadge from "@/app/components/IssueStatusBadge"
-import MarkdownPreview from "@/app/components/MarkdownPreview"
 import prisma from "../../../../prisma/client"
+import dynamic from "next/dynamic"
+
+const MarkdownPreview = dynamic(() => import("@/app/components/MarkdownPreview"), { ssr: false })
 
 interface IssueDetailsPageType {
   params: { id: string }
