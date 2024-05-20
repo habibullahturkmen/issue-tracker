@@ -6,3 +6,6 @@ Content-Type: application/json
   "title": "Dummy Issue",
   "description": "Dummy description"
 }
+
+### Delete an issue
+DELETE http://localhost:3001/api/issues/153

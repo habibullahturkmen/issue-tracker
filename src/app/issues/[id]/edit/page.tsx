@@ -27,8 +27,6 @@ const EditIssuePage: FC<EditIssuePage> = async ({ params }) => {
     notFound()
   }
 
-  console.log(params)
-
   return <IssueForm issue={issue} />
 }
 
