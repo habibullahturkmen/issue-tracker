@@ -56,5 +56,4 @@ export async function DELETE(request: NextRequest, { params }: ParamType) {
   })
 
   return NextResponse.json(deletedIssue, { status: 200 })
-
 }

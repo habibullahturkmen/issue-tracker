@@ -35,11 +35,7 @@ const DeleteIssueButton: FC<DeleteIssueButtonType> = ({ id }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button
-            color="red"
-            className="cursor-pointer w-lg"
-            disabled={isLoading}
-          >
+          <Button color="red" className="cursor-pointer w-lg" disabled={isLoading}>
             <GoTrash />
             Delete Issue
             {isLoading && <Spinner />}
