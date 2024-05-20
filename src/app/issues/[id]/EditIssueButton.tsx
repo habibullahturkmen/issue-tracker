@@ -9,10 +9,12 @@ interface EditIssueButtonType {
 
 const EditIssueButton: FC<EditIssueButtonType> = ({ id }) => {
   return (
-    <Button className="cursor-pointer">
-      <RxPencil2 />
-      <Link href={`/issues/${id}/edit`}>Edit Issue</Link>
-    </Button>
+    <Link href={`/issues/${id}/edit`}>
+      <Button className="cursor-pointer w-full">
+        <RxPencil2 />
+        Edit Issue
+      </Button>
+    </Link>
   )
 }
 
