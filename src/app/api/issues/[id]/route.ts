@@ -40,7 +40,7 @@ export async function PATCH(request: NextRequest, { params }: ParamType) {
 
 export async function DELETE(request: NextRequest, { params }: ParamType) {
   if (isNaN(Number(params.id))) {
-    return NextResponse.json({ message: "Invalid ID format" }, { status: 400 })
+    return NextResponse.json({ error: "Invalid ID format" }, { status: 400 })
   }
 
   const issue = await prisma.issue.findUnique({
