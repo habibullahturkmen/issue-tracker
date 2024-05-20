@@ -4,9 +4,11 @@ import React from "react"
 
 const IssueActions = () => {
   return (
-    <Button className="mb-5">
-      <Link href="/issues/new">New Issue</Link>
-    </Button>
+    <Link href="/issues/new">
+      <Button className="mb-5 cursor-pointer">
+        New Issue
+      </Button>
+    </Link>
   )
 }
 
