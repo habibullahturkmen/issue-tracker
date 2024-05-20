@@ -51,6 +51,7 @@ const IssueForm: FC<IssueFormType> = ({ issue }) => {
         await axios.post("/api/issues", data)
       }
       router.push("/issues")
+      router.refresh()
     } catch (e) {
       setError("an unexpected error occurred")
     } finally {
