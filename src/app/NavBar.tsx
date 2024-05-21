@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, Box, Container, DropdownMenu, Flex, Text } from "@radix-ui/themes"
+import { Avatar, Box, Container, DropdownMenu, Flex, Skeleton, Text } from "@radix-ui/themes"
 import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { AiFillBug } from "react-icons/ai"
@@ -12,7 +12,7 @@ import ThemeSwitch from "@/app/components/ThemeSwitch"
 
 const NavBar = () => {
   return (
-    <nav className="border-b mb-5 px-5 py-3">
+    <nav className="flex justify-center items-center border-b mb-5 px-5 h-16">
       <Container>
         <Flex justify="between">
           <Flex align="center" gap="3">
@@ -62,7 +62,7 @@ const NavLinks = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession()
 
-  if (status === "loading") return null
+  if (status === "loading") return <Skeleton width="40px" height="40px" className="rounded-3xl" />
 
   if (status === "unauthenticated") {
     return (
