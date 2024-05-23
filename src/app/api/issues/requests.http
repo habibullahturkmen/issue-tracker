@@ -1,5 +1,5 @@
 ### Create an issue
-POST http://localhost:3000/api/issues
+POST http://localhost:3001/api/issues
 Content-Type: application/json
 
 {
@@ -7,5 +7,15 @@ Content-Type: application/json
   "description": "Dummy description"
 }
 
+
+### Edit an issue
+PATCH http://localhost:3001/api/issues/1
+Content-Type: application/json
+
+{
+  "title": "Dummy Issue edited",
+  "description": "Dummy issue description edited"
+}
+
 ### Delete an issue
-DELETE http://localhost:3001/api/issues/153
+DELETE http://localhost:3001/api/issues/1

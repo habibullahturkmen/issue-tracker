@@ -1,10 +1,12 @@
 import { Box, Flex, Grid } from "@radix-ui/themes"
+import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
 import React, { FC } from "react"
 
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton"
 import EditIssueButton from "@/app/issues/[id]/EditIssueButton"
 import IssueDetails from "@/app/issues/[id]/IssueDetails"
+import authOptions from "@/app/api/auth/authOptions"
 import prisma from "../../../../prisma/client"
 
 interface IssueDetailsPageType {
@@ -12,6 +14,8 @@ interface IssueDetailsPageType {
 }
 
 const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
+  const session = await getServerSession(authOptions)
+
   if (isNaN(Number(params.id))) {
     notFound()
   }
@@ -29,12 +33,14 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
-      <Box>
-        <Flex direction="column" gap="4">
-          <EditIssueButton id={issue.id} />
-          <DeleteIssueButton id={issue.id} />
-        </Flex>
-      </Box>
+      {session && (
+        <Box>
+          <Flex direction="column" gap="4">
+            <EditIssueButton id={issue.id} />
+            <DeleteIssueButton id={issue.id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   )
 }

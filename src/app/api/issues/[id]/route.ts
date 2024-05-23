@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from "next/server"
 
 import { issueSchema } from "@/app/validationSchemas"
+import authOptions from "@/app/api/auth/authOptions"
 import prisma from "../../../../../prisma/client"
+import { getServerSession } from "next-auth"
 
 interface ParamType {
   params: { id: string }
 }
 
 export async function PATCH(request: NextRequest, { params }: ParamType) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized: cannot EDIT issue!" }, { status: 401 })
+  }
+
   const body = await request.json()
   const validation = issueSchema.safeParse(body)
 
@@ -39,6 +47,12 @@ export async function PATCH(request: NextRequest, { params }: ParamType) {
 }
 
 export async function DELETE(request: NextRequest, { params }: ParamType) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized: cannot DELETE issue!" }, { status: 401 })
+  }
+
   if (isNaN(Number(params.id))) {
     return NextResponse.json({ error: "Invalid ID format" }, { status: 400 })
   }
