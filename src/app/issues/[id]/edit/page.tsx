@@ -3,7 +3,7 @@ import dynamic from "next/dynamic"
 import React, { FC } from "react"
 
 import IssueFormSkeleton from "@/app/issues/_components/IssueFormSkeleton"
-import prisma from "../../../../../prisma/client"
+import prisma from "@/prisma/client"
 
 const IssueForm = dynamic(() => import("@/app/issues/_components/IssueForm"), {
   ssr: false,

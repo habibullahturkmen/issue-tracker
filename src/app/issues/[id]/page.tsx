@@ -8,7 +8,7 @@ import EditIssueButton from "@/app/issues/[id]/EditIssueButton"
 import AssigneeSelect from "@/app/issues/[id]/AssigneeSelect"
 import IssueDetails from "@/app/issues/[id]/IssueDetails"
 import authOptions from "@/app/api/auth/authOptions"
-import prisma from "../../../../prisma/client"
+import prisma from "@/prisma/client"
 
 interface IssueDetailsPageType {
   params: { id: string }

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getServerSession } from "next-auth"
 
 import { issueSchema } from "@/app/validationSchemas"
 import authOptions from "@/app/api/auth/authOptions"
-import prisma from "../../../../../prisma/client"
-import { getServerSession } from "next-auth"
+import prisma from "@/prisma/client"
 
 interface ParamType {
   params: { id: string }

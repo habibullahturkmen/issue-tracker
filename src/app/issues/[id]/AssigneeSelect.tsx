@@ -1,7 +1,7 @@
 import { Select } from "@radix-ui/themes"
 import React from "react"
 
-import prisma from "../../../../prisma/client"
+import prisma from "@/prisma/client"
 
 const AssigneeSelect = async () => {
   const users = await prisma.user.findMany({
