@@ -5,6 +5,7 @@ import React, { FC } from "react"
 
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton"
 import EditIssueButton from "@/app/issues/[id]/EditIssueButton"
+import AssigneeSelect from "@/app/issues/[id]/AssigneeSelect"
 import IssueDetails from "@/app/issues/[id]/IssueDetails"
 import authOptions from "@/app/api/auth/authOptions"
 import prisma from "../../../../prisma/client"
@@ -36,6 +37,7 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
       {session && (
         <Box>
           <Flex direction="column" gap="4">
+            <AssigneeSelect />
             <EditIssueButton id={issue.id} />
             <DeleteIssueButton id={issue.id} />
           </Flex>
