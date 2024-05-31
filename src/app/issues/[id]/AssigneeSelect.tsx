@@ -1,11 +1,15 @@
 import { RiErrorWarningFill } from "react-icons/ri"
-import { Select } from "@radix-ui/themes"
-import { User } from "@prisma/client"
-import React from "react"
+import { Issue, User } from "@prisma/client"
+import React, { FC } from "react"
 
+import AssigneeSelector from "@/app/issues/[id]/_components/AssigneeSelector"
 import prisma from "@/prisma/client"
 
-const AssigneeSelect = async () => {
+interface AssigneeSelectType {
+  issue: Issue
+}
+
+const AssigneeSelect: FC<AssigneeSelectType> = async ({ issue }) => {
   try {
     const users: User[] = await prisma.user.findMany({
       orderBy: { name: "asc" },
@@ -15,21 +19,7 @@ const AssigneeSelect = async () => {
       return null
     }
 
-    return (
-      <Select.Root>
-        <Select.Trigger placeholder="Assign..." />
-        <Select.Content>
-          <Select.Group>
-            <Select.Label>Suggestions</Select.Label>
-            {users.map((user: User) => (
-              <Select.Item key={user.id} value={user.id}>
-                {user.name}
-              </Select.Item>
-            ))}
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
-    )
+    return <AssigneeSelector users={users} issueId={issue.id} assignedTo={issue.assignedToUserId} />
   } catch (e) {
     console.log(e)
     return (
