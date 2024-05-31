@@ -1,9 +1,9 @@
 "use client"
 
-import { RiErrorWarningFill } from "react-icons/ri"
-import React, { FC, useState } from "react"
+import { toast, Toaster } from "react-hot-toast"
 import { Select } from "@radix-ui/themes"
 import { User } from "@prisma/client"
+import React, { FC } from "react"
 import axios from "axios"
 
 interface AssigneeSelectorType {
@@ -13,26 +13,19 @@ interface AssigneeSelectorType {
 }
 
 const AssigneeSelector: FC<AssigneeSelectorType> = ({ users, issueId, assignedTo }) => {
-  const [hasError, setHasError] = useState<boolean>(false)
-
   const assignIssue = async (userId: string) => {
     try {
       await axios.patch(`/api/issues/${issueId}`, {
         assignedToUserId: userId === "Unassigned" ? null : userId,
       })
-    } catch (e) {
-      setHasError(true)
+      toast.success("Issue successfully assigned to user!")
+    } catch {
+      toast.error("Error while assigning user!")
     }
   }
 
   return (
     <>
-      {hasError && (
-        <div className="flex items-center justify-center gap-2 text-red-500 h-5">
-          <p className="text-xs text-center pb-0">Error while assigning user</p>
-          <RiErrorWarningFill size={14} />
-        </div>
-      )}
       <Select.Root
         defaultValue={assignedTo ? assignedTo : "Unassigned"}
         onValueChange={(userId) => assignIssue(userId)}
@@ -50,6 +43,7 @@ const AssigneeSelector: FC<AssigneeSelectorType> = ({ users, issueId, assignedTo
           </Select.Group>
         </Select.Content>
       </Select.Root>
+      <Toaster />
     </>
   )
 }
