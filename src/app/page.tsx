@@ -1,7 +1,11 @@
+import LatestIssues from "@/app/LatestIssues"
+
 export default function Home() {
   return (
     <main>
-      <h1 className="text-zinc-500 dark:text-gray-300">hello</h1>
+      <LatestIssues />
     </main>
   )
 }
+
+export const dynamic = "force-dynamic"
