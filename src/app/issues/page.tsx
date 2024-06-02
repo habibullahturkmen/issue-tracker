@@ -18,7 +18,7 @@ interface columnType {
   value: keyof Issue
   className?: string
 }
-
+// TODO: Descending Sort
 const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
   const columns: columnType[] = [
     { label: "Issue", value: "title" },
