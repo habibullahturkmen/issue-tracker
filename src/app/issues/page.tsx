@@ -1,16 +1,21 @@
 import { Issue, Status } from "@prisma/client"
+import { Flex, Table } from "@radix-ui/themes"
 import { RxArrowUp } from "react-icons/rx"
-import { Table } from "@radix-ui/themes"
 import React, { FC } from "react"
 import NextLink from "next/link"
 
 import IssueStatusBadge from "@/app/components/IssueStatusBadge"
 import IssueActions from "@/app/issues/IssueActions"
+import Pagination from "@/app/components/Pagination"
 import Link from "@/app/components/Link"
 import prisma from "@/prisma/client"
 
 interface IssuesPageType {
-  searchParams: { status: Status; orderBy: keyof Issue }
+  searchParams: {
+    status: Status
+    orderBy: keyof Issue
+    page: string
+  }
 }
 
 interface columnType {
@@ -18,6 +23,7 @@ interface columnType {
   value: keyof Issue
   className?: string
 }
+
 // TODO: Descending Sort
 const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
   const columns: columnType[] = [
@@ -28,15 +34,26 @@ const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
 
   const statuses = Object.values(Status)
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined
+  const where = { status }
 
   const orderBy = columns.map((column) => column.value).includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined
 
-  const issues = await prisma.issue.findMany({ where: { status: status }, orderBy: orderBy })
+  const page = Number(searchParams.page) || 1
+  const pageSize = 10 // TODO: Add a dropdown list to select page size
+
+  const issues = await prisma.issue.findMany({
+    where,
+    orderBy: orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  })
+
+  const issueCount = await prisma.issue.count({ where })
 
   return (
-    <div>
+    <Flex direction="column" gap="4">
       <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
@@ -77,7 +94,8 @@ const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
           ))}
         </Table.Body>
       </Table.Root>
-    </div>
+      <Pagination itemCount={issueCount} pageSize={pageSize} currentPage={page} />
+    </Flex>
   )
 }
 
