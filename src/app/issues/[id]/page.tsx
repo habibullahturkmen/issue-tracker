@@ -1,8 +1,8 @@
 import { Box, Flex, Grid } from "@radix-ui/themes"
 import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
+import React, { FC, cache } from "react"
 import { Issue } from "@prisma/client"
-import React, { FC } from "react"
 
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton"
 import EditIssueButton from "@/app/issues/[id]/EditIssueButton"
@@ -15,6 +15,10 @@ interface IssueDetailsPageType {
   params: { id: string }
 }
 
+const fetchUser = cache((issueId: number) => {
+  return prisma.issue.findUnique({ where: { id: issueId } })
+})
+
 const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
   const session = await getServerSession(authOptions)
 
@@ -22,9 +26,7 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
     notFound()
   }
 
-  const issue = await prisma.issue.findUnique({
-    where: { id: Number(params.id) },
-  })
+  const issue: Issue | null = await fetchUser(Number(params.id))
 
   if (!issue) {
     notFound()
@@ -49,7 +51,7 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
 }
 
 export const generateMetadata = async ({ params }: IssueDetailsPageType) => {
-  const issue: Issue | null = await prisma.issue.findUnique({ where: { id: Number(params.id) } })
+  const issue: Issue | null = await fetchUser(Number(params.id))
 
   return {
     title: issue?.title,
