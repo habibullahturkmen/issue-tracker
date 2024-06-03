@@ -1,6 +1,7 @@
 import { Box, Flex, Grid } from "@radix-ui/themes"
 import { getServerSession } from "next-auth"
 import { notFound } from "next/navigation"
+import { Issue } from "@prisma/client"
 import React, { FC } from "react"
 
 import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton"
@@ -45,6 +46,15 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
       )}
     </Grid>
   )
+}
+
+export const generateMetadata = async ({ params }: IssueDetailsPageType) => {
+  const issue: Issue | null = await prisma.issue.findUnique({ where: { id: Number(params.id) } })
+
+  return {
+    title: issue?.title,
+    description: "Details of issue " + issue?.id,
+  }
 }
 
 export default IssueDetailsPage

@@ -1,6 +1,7 @@
 import { Issue, Status } from "@prisma/client"
 import { Flex } from "@radix-ui/themes"
 import React, { FC } from "react"
+import { Metadata } from "next"
 
 import IssueTable, { columnNames } from "@/app/issues/IssueTable"
 import IssueActions from "@/app/issues/IssueActions"
@@ -44,5 +45,10 @@ const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
 }
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issues",
+  description: "View all project issues",
+}
 
 export default IssuesPage
