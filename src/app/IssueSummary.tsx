@@ -1,6 +1,6 @@
 import { Card, Flex, Text } from "@radix-ui/themes"
-import React, { FC } from "react"
 import { Status } from "@prisma/client"
+import React, { FC } from "react"
 import Link from "next/link"
 
 interface IssueSummaryType {

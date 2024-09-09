@@ -19,9 +19,11 @@ const EditIssuePage: FC<EditIssuePage> = async ({ params }) => {
     notFound()
   }
 
-  const issue = await prisma.issue.findUnique({
-    where: { id: Number(params.id) },
-  })
+  const issue = await prisma.issue
+    .findUnique({
+      where: { id: Number(params.id) },
+    })
+    .catch((e) => console.error(e))
 
   if (!issue) {
     notFound()

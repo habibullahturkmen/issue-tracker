@@ -26,14 +26,21 @@ const IssuesPage: FC<IssuesPageType> = async ({ searchParams }) => {
   const page = Number(searchParams.page) || 1
   const pageSize = 10 // TODO: Add a dropdown list to select page size
 
-  const issues: Issue[] = await prisma.issue.findMany({
-    where,
-    orderBy: orderBy,
-    skip: (page - 1) * pageSize,
-    take: pageSize,
-  })
+  let issues: Issue[] = []
 
-  const issueCount = await prisma.issue.count({ where })
+  let issueCount: number = 0
+
+  try {
+    issues = await prisma.issue.findMany({
+      where,
+      orderBy: orderBy,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    })
+    issueCount = await prisma.issue.count({ where })
+  } catch (e) {
+    console.error(e)
+  }
 
   return (
     <Flex direction="column" gap="4">

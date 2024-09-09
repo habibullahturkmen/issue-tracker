@@ -15,8 +15,14 @@ interface IssueDetailsPageType {
   params: { id: string }
 }
 
+type IssueType = Issue | null | undefined
+
 const fetchUser = cache((issueId: number) => {
-  return prisma.issue.findUnique({ where: { id: issueId } })
+  try {
+    return prisma.issue.findUnique({ where: { id: issueId } })
+  } catch (e) {
+    console.error(e)
+  }
 })
 
 const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
@@ -26,7 +32,7 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
     notFound()
   }
 
-  const issue: Issue | null = await fetchUser(Number(params.id))
+  const issue: IssueType = await fetchUser(Number(params.id))
 
   if (!issue) {
     notFound()
@@ -51,7 +57,7 @@ const IssueDetailsPage: FC<IssueDetailsPageType> = async ({ params }) => {
 }
 
 export const generateMetadata = async ({ params }: IssueDetailsPageType) => {
-  const issue: Issue | null = await fetchUser(Number(params.id))
+  const issue: IssueType = await fetchUser(Number(params.id))
 
   return {
     title: issue?.title,

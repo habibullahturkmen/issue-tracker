@@ -6,11 +6,14 @@ import IssueStatusBadge from "@/app/components/IssueStatusBadge"
 import prisma from "@/prisma/client"
 
 const LatestIssues = async () => {
-  const issues = await prisma.issue.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 5,
-    include: { assignedToUser: true },
-  })
+  const issues =
+    (await prisma.issue
+      .findMany({
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        include: { assignedToUser: true },
+      })
+      .catch((e) => console.error(e))) || []
 
   return (
     <Card>

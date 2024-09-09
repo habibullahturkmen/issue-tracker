@@ -7,9 +7,18 @@ import IssueChart from "@/app/IssueChart"
 import prisma from "@/prisma/client"
 
 export default async function Home() {
-  const openIssues = await prisma.issue.count({ where: { status: "OPEN" } })
-  const inProgressIssues = await prisma.issue.count({ where: { status: "IN_PROGRESS" } })
-  const closedIssues = await prisma.issue.count({ where: { status: "CLOSED" } })
+  const openIssues =
+    (await prisma.issue
+      .count({ where: { status: "OPEN" } })
+      .catch((error) => console.error(error))) || 0
+  const inProgressIssues =
+    (await prisma.issue
+      .count({ where: { status: "IN_PROGRESS" } })
+      .catch((e) => console.error(e))) || 0
+  const closedIssues =
+    (await prisma.issue
+      .count({ where: { status: "CLOSED" } })
+      .catch((error) => console.error(error))) || 0
 
   return (
     <main>
