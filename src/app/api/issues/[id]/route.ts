@@ -6,11 +6,12 @@ import authOptions from "@/app/api/auth/authOptions"
 import prisma from "@/prisma/client"
 
 interface ParamType {
-  params: { id: string }
+  id: string
 }
 
-export async function PATCH(request: NextRequest, { params }: ParamType) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<ParamType> }) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
 
     if (!session) {
@@ -25,7 +26,7 @@ export async function PATCH(request: NextRequest, { params }: ParamType) {
       return NextResponse.json(validation.error.format(), { status: 400 })
     }
 
-    if (isNaN(Number(params.id))) {
+    if (isNaN(Number(id))) {
       return NextResponse.json({ message: "Invalid ID format" }, { status: 400 })
     }
 
@@ -37,7 +38,7 @@ export async function PATCH(request: NextRequest, { params }: ParamType) {
     }
 
     const issue = await prisma.issue.findUnique({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
     })
 
     if (!issue) {
@@ -59,20 +60,21 @@ export async function PATCH(request: NextRequest, { params }: ParamType) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: ParamType) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<ParamType> }) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized: cannot DELETE issue!" }, { status: 401 })
     }
 
-    if (isNaN(Number(params.id))) {
+    if (isNaN(Number(id))) {
       return NextResponse.json({ error: "Invalid ID format" }, { status: 400 })
     }
 
     const issue = await prisma.issue.findUnique({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
     })
 
     if (!issue) {
@@ -80,7 +82,7 @@ export async function DELETE(request: NextRequest, { params }: ParamType) {
     }
 
     const deletedIssue = await prisma.issue.delete({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
     })
 
     return NextResponse.json(deletedIssue, { status: 200 })

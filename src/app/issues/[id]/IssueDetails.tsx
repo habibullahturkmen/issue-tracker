@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, Flex, Heading, Text } from "@radix-ui/themes"
 import { Issue } from "@prisma/client"
 import dynamic from "next/dynamic"
